@@ -1,49 +1,30 @@
-# Terraform scripts for Azure
+# Complete ECS Instance 
 
-## Instructions
+Configuration in this directory creates set of ECS instance resource in various combinations.
 
-Install Terraform using the [instructions](https://learn.hashicorp.com/terraform/getting-started/install.html) for your platform.
+Data sources are used to discover existing instance type.
 
-Create a service principal in Azure by running the following command.
+## Usage
 
-```ssh
-az ad sp create-for-rbac --name terraform-sp
+To run this example you need to execute:
+
+```bash
+$ terraform init
+$ terraform plan
+$ terraform apply
 ```
 
-You can get your TenantID and SubscriptionID using this command:
+Note that this example may create resources which cost money. Run `terraform destroy` when you don't need these resources.
 
-```ssh
-az account show --query "{subscriptionId:id, tenantId:tenantId}" --output table
-```
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM  -->
+## Outputs
 
-On Mac/Linux set the following environment variables using the commands below with the information provided in the service principal.  Be sure to pick the correct ARM_ENVIRONMENT for the Azure cloud you are targeting.
+| Name | Description |
+|------|-------------|
+| this\_instance\_id | The ID of the ECS instance |
+| this\_instance\_name | The name of the ECS instance |
+| this\_vswitch\_id | The ID of the Vswitch |
+| this\_security\_group\_ids | The ID of the Security Group  |
+| this\_private\_ip | The private ip of the ECS instance |
 
-```ssh
-export ARM_SUBSCRIPTION_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-export ARM_CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-export ARM_CLIENT_SECRET=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-export ARM_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-export ARM_ENVIRONMENT=[usgovernment/public/german/china (chose one)]
-```
-
-Execute terraform plan and apply:
-
-```ssh
-terraform fmt
-terraform validate
-terraform plan
-terraform apply
-```
-
-Clean resources
-
-It will destroy everything that was created.
-
-```ssh
-terraform destroy --force
-```
-
-## Caution
-
-Be aware that by running this script your account might get billed.
-Also it is recommended to use a remote state instead of a local one.
+<!-- END OF PRE-COMMIT-TERRAFORM  -->
